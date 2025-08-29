@@ -4,7 +4,7 @@ import pandas as pd
 from datetime import datetime
 
 # URL de la hoja de cálculo de Google publicada como CSV
-url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiqSoTatlwg9RCNUP1XUzNEV2GWW9a0CdiuUJedH148If1EgY2HGyoI0n-qxOrLQrH-V2PsjM0_Gzo/pub?output=csv"
+url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiqSoTatlwg9RCNUP1XUzNEV2GWW9a0CdiuUJedH148If1EgY2HGyoI0n-qxOrLQrH-V2PsjM0_Gzo/pub?gid=1666377556&single=true&output=csv"
 
 # --- FUNCIÓN PARA CARGAR DATOS ---
 # Es una buena práctica encapsular la carga de datos en una función con caché
