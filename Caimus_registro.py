@@ -2,17 +2,21 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
+# URL del CSV publicado
 url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiqSoTatlwg9RCNUP1XUzNEV2GWW9a0CdiuUJedH148If1EgY2HGyoI0n-qxOrLQrH-V2PsjM0_Gzo/pub?output=csv"
 
-# ⚡ Solo leer CSV si no existe en session_state
+# ⚡ Inicialización de session_state
 if "df" not in st.session_state:
     st.session_state.df = pd.read_csv(url)
+
+# Para asegurarnos de no sobrescribir df accidentalmente
+df = st.session_state.df.copy()
 
 st.title("📊 CAIMUS - Población Beneficiada")
 
 # Mostrar tabla
 st.subheader("📋 Base de datos actual")
-st.dataframe(st.session_state.df, use_container_width=True)
+st.dataframe(df, use_container_width=True)
 
 # Formulario
 st.subheader("📝 Ingresar nuevo registro")
@@ -35,6 +39,7 @@ with st.form("nuevo_registro", clear_on_submit=True):
     submitted = st.form_submit_button("➕ Guardar registro")
 
     if submitted:
+        # Verificación campos obligatorios
         if not all([departamento, municipio, no_caso, nombre, dpi, ubicacion, tipologia]):
             st.error("❌ Por favor llena todos los campos obligatorios.")
         else:
@@ -54,8 +59,10 @@ with st.form("nuevo_registro", clear_on_submit=True):
                 "Tipología 22-2008": tipologia
             }
 
-            # ✅ Actualizar solo session_state
+            # Actualizamos session_state directamente
             st.session_state.df = pd.concat([st.session_state.df, pd.DataFrame([nuevo])], ignore_index=True)
 
             st.success("✅ Registro agregado y base de datos actualizada.")
+
+            # Mostrar la tabla actualizada inmediatamente
             st.dataframe(st.session_state.df, use_container_width=True)
