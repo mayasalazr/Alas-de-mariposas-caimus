@@ -2,11 +2,10 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 
-url ="https://docs.google.com/spreadsheets/d/e/2PACX-1vRiqSoTatlwg9RCNUP1XUzNEV2GWW9a0CdiuUJedH148If1EgY2HGyoI0n-qxOrLQrH-V2PsjM0_Gzo/pub?output=csv"
-df = pd.read_csv(url)
+url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRiqSoTatlwg9RCNUP1XUzNEV2GWW9a0CdiuUJedH148If1EgY2HGyoI0n-qxOrLQrH-V2PsjM0_Gzo/pub?output=csv"
 
 if "df" not in st.session_state:
-    st.session_state.df = pd.read_excel(url)  # o pd.read_csv(url)
+    st.session_state.df = pd.read_csv(url)  # CSV correcto
 
 st.title("📊 CAIMUS - Población Beneficiada")
 
@@ -57,8 +56,8 @@ with st.form("nuevo_registro", clear_on_submit=True):
             # ✅ Actualizar DataFrame en memoria
             st.session_state.df = pd.concat([st.session_state.df, pd.DataFrame([nuevo])], ignore_index=True)
 
-            # ✅ Guardar cambios en archivo local (si trabajas con Excel/CSV)
-            st.session_state.df.to_excel("Caimus_Poblacion_Beneficiada.xlsx", index=False)
+            # ✅ Guardar cambios en archivo local
+            st.session_state.df.to_csv("Caimus_Poblacion_Beneficiada.csv", index=False)
 
             st.success("✅ Registro agregado y base de datos actualizada.")
             st.dataframe(st.session_state.df, use_container_width=True)
